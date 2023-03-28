@@ -14,13 +14,14 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+  MyHomePage({super.key});
+  final PageController controller = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +64,76 @@ class MyHomePage extends StatelessWidget {
             )
           ],
         ),
+      ),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 180,
+            child: PageView(
+              controller: controller,
+              children: [
+                ...List.generate(
+                  3,
+                  (index) => Center(
+                    child: Container(
+                      color: const Color(0xFFCDCDCD),
+                      width: 345,
+                      height: 180,
+                      child: Center(child: Text('${index + 1}')),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'New Arrivals',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: const Row(
+                    children: [
+                      Text('See All',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w700)),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16,
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 23,
+          ),
+          Expanded(
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  mainAxisSpacing: 73, crossAxisSpacing: 15, crossAxisCount: 2),
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.all(15),
+                child: Container(
+                  width: 165,
+                  height: 120,
+                  color: const Color(0xFFCDCDCD),
+                ),
+              ),
+              itemCount: 4,
+            ),
+          )
+        ],
       ),
     );
   }
