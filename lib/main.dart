@@ -26,13 +26,14 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(106),
         child: AppBar(
           // tinggi dari title ditentukan oleh toolbarHeight
           // maka isi nilai toolbarHeight sama dengan tinggi dari appbar
           toolbarHeight: 106,
-          backgroundColor: Colors.amber,
+          backgroundColor: Colors.white,
           centerTitle: false,
           elevation: 0.0,
           title: const Padding(
@@ -121,15 +122,30 @@ class MyHomePage extends StatelessWidget {
           Expanded(
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisSpacing: 73, crossAxisSpacing: 15, crossAxisCount: 2),
+                  childAspectRatio: 1 / 1.03,
+                  mainAxisSpacing: 23,
+                  crossAxisSpacing: 15,
+                  crossAxisCount: 2),
               itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.all(15),
-                child: Container(
-                  width: 165,
-                  height: 120,
-                  color: const Color(0xFFCDCDCD),
-                ),
-              ),
+                  padding: const EdgeInsets.all(15),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 165,
+                        height: 120,
+                        color: const Color(0xFFCDCDCD),
+                      ),
+                      const Text('New Trend',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w700)),
+                      const Expanded(
+                        child: Text('Dress like a tourist',
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w400)),
+                      )
+                    ],
+                  )),
               itemCount: 4,
             ),
           )
