@@ -1,3 +1,4 @@
+import 'package:adaptive_responsive_app/widget/dashboard_appbar.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,72 +10,52 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MyHomePage(),
+      home: const DashboardView(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  MyHomePage({super.key});
-  final PageController controller = PageController();
+class DashboardView extends StatefulWidget {
+  const DashboardView({super.key});
+
+  @override
+  State<DashboardView> createState() => _DashboardViewState();
+}
+
+class _DashboardViewState extends State<DashboardView>
+    with TickerProviderStateMixin {
+  final PageController pageController = PageController();
+  TabController? tabController;
+  int index = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 4, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(106),
-        child: AppBar(
-          // tinggi dari title ditentukan oleh toolbarHeight
-          // maka isi nilai toolbarHeight sama dengan tinggi dari appbar
-          toolbarHeight: 106,
-          backgroundColor: Colors.white,
-          centerTitle: false,
-          elevation: 0.0,
-          title: const Padding(
-            padding: EdgeInsets.only(right: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Shop',
-                  style: TextStyle(fontSize: 36, fontWeight: FontWeight.w700),
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  'Over 45K Items Available for You',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                )
-              ],
-            ),
-          ),
-          actions: const [
-            Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: Icon(
-                Icons.person_4_rounded,
-                size: 50,
-              ),
-            )
-          ],
-        ),
-      ),
+      appBar: const DashboardAppBar(),
       body: Column(
         children: [
           SizedBox(
             height: 180,
             child: PageView(
-              controller: controller,
+              onPageChanged: (int pageIndex) {
+                setState(() => tabController!.index = pageIndex);
+              },
+              controller: pageController,
               children: [
                 ...List.generate(
-                  3,
+                  4,
                   (index) => Center(
                     child: Container(
                       color: const Color(0xFFCDCDCD),
@@ -88,7 +69,13 @@ class MyHomePage extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 40,
+            height: 15,
+          ),
+          TabPageSelector(
+            controller: tabController,
+          ),
+          const SizedBox(
+            height: 15,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -122,30 +109,25 @@ class MyHomePage extends StatelessWidget {
           Expanded(
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 1 / 1.03,
-                  mainAxisSpacing: 23,
-                  crossAxisSpacing: 15,
-                  crossAxisCount: 2),
-              itemBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 165,
-                        height: 120,
-                        color: const Color(0xFFCDCDCD),
-                      ),
-                      const Text('New Trend',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w700)),
-                      const Expanded(
-                        child: Text('Dress like a tourist',
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w400)),
-                      )
-                    ],
-                  )),
+                  childAspectRatio: 1 / 1.03, crossAxisCount: 2),
+              itemBuilder: (context, index) => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 165,
+                    height: 120,
+                    color: const Color(0xFFCDCDCD),
+                  ),
+                  const Text('New Trend',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+                  const Expanded(
+                    child: Text('Dress like a tourist',
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w400)),
+                  )
+                ],
+              ),
               itemCount: 4,
             ),
           )
