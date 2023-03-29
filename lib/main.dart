@@ -57,11 +57,13 @@ class _DashboardViewState extends State<DashboardView>
                 ...List.generate(
                   4,
                   (index) => Center(
-                    child: Container(
-                      color: const Color(0xFFCDCDCD),
+                    child: Image.network(
+                      "https://picsum.photos/id/${index + 16}/345/180",
+                      // color: const Color(0xFFCDCDCD),
                       width: 345,
                       height: 180,
-                      child: Center(child: Text('${index + 1}')),
+                      fit: BoxFit.fill,
+                      // child: Center(child: Text('${index + 1}')),
                     ),
                   ),
                 )
@@ -113,10 +115,11 @@ class _DashboardViewState extends State<DashboardView>
               itemBuilder: (context, index) => Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
+                  Image.network(
+                    "https://picsum.photos/id/${index + 10}/165/120",
                     width: 165,
                     height: 120,
-                    color: const Color(0xFFCDCDCD),
+                    fit: BoxFit.fill,
                   ),
                   const Text('New Trend',
                       style:
