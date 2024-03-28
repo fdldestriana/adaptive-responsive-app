@@ -1,4 +1,4 @@
-# adaptive_responsive_app
+# Adaptive and Responsive App
 
 A new Flutter project.
 
